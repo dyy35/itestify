@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Testimony Story Builder</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.2em;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .form-section {
+            padding: 40px;
+        }
+
+        .question-group {
+            margin-bottom: 35px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: slideIn 0.6s ease forwards;
+        }
+
+        .question-group:nth-child(1) { animation-delay: 0.1s; }
+        .question-group:nth-child(2) { animation-delay: 0.2s; }
+        .question-group:nth-child(3) { animation-delay: 0.3s; }
+
+        @keyframes slideIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .question-group label {
+            display: block;
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .question-group label::before {
+            content: '';
+            position: absolute;
+            left: -10px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 4px;
+            height: 20px;
+            background: #4CAF50;
+            border-radius: 2px;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 120px;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1em;
+            font-family: inherit;
+            resize: vertical;
+            transition: all 0.3s ease;
+            background: #fafafa;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #4CAF50;
+            box-shadow: 0 0 15px rgba(76, 175, 80, 0.2);
+            background: white;
+            transform: translateY(-2px);
+        }
+
+        .generate-btn {
+            background: linear-gradient(135deg, #FF6B6B 0%, #ee5a52 100%);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: block;
+            margin: 30px auto;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+        }
+
+        .generate-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+        }
+
+        .generate-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .story-output {
+            margin-top: 40px;
+            padding: 30px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 12px;
+            border-left: 5px solid #4CAF50;
+            display: none;
+            animation: fadeIn 0.8s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .story-output h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            text-align: center;
+        }
+
+        .story-text {
+            font-size: 1.1em;
+            line-height: 1.8;
+            color: #34495e;
+            text-align: justify;
+            text-indent: 2em;
+        }
+
+        .story-text p {
+            margin-bottom: 1.5em;
+        }
+
+        .copy-btn {
+            background: #6c757d;
+            color: white;
+            padding: 10px 25px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .copy-btn:hover {
+            background: #5a6268;
+            transform: translateY(-2px);
+        }
+
+        .placeholder-text {
+            color: #999;
+            font-style: italic;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                border-radius: 10px;
+            }
+            
+            .form-section {
+                padding: 20px;
+            }
+            
+            .header {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>✨ Your Faith Journey ✨</h1>
+            <p>Share your testimony and watch it become a beautiful story</p>
+        </div>
+        
+        <div class="form-section">
+            <div class="question-group">
+                <label for="before">What were you like before Christ?</label>
+                <textarea 
+                    id="before" 
+                    placeholder="Share about your life, struggles, mindset, or circumstances before you knew Jesus..."
+                ></textarea>
+            </div>
+            
+            <div class="question-group">
+                <label for="decision">How did you decide to follow Jesus?</label>
+                <textarea 
+                    id="decision" 
+                    placeholder="Tell about the moment, experience, or process that led you to faith in Christ..."
+                ></textarea>
+            </div>
+            
+            <div class="question-group">
+                <label for="after">What are you like now?</label>
+                <textarea 
+                    id="after" 
+                    placeholder="Describe how your life, perspective, or character has changed since following Jesus..."
+                ></textarea>
+            </div>
+            
+            <button class="generate-btn" onclick="generateStory()">
+                Create My Story ✨
+            </button>
+            
+            <div id="storyOutput" class="story-output">
+                <h2>Your Personal Testimony</h2>
+                <div id="storyText" class="story-text"></div>
+                <button class="copy-btn" onclick="copyStory()">Copy Story</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function generateStory() {
+            const before = document.getElementById('before').value.trim();
+            const decision = document.getElementById('decision').value.trim();
+            const after = document.getElementById('after').value.trim();
+            
+            if (!before || !decision || !after) {
+                alert('Please fill in all three sections to create your story.');
+                return;
+            }
+            
+            // Create transition phrases to make the story flow naturally
+            const transitions = {
+                toDecision: [
+                    "But then, something changed.",
+                    "However, God had other plans.",
+                    "That's when I encountered Jesus.",
+                    "Then came the turning point.",
+                    "But Jesus met me where I was."
+                ],
+                toAfter: [
+                    "Since that moment, my life has been transformed.",
+                    "Now, walking with Christ has changed everything.",
+                    "Today, I can say with confidence that",
+                    "The transformation in my life is evident:",
+                    "Living as a follower of Jesus means that"
+                ]
+            };
+            
+            // Randomly select transition phrases
+            const transitionToDecision = transitions.toDecision[Math.floor(Math.random() * transitions.toDecision.length)];
+            const transitionToAfter = transitions.toAfter[Math.floor(Math.random() * transitions.toAfter.length)];
+            
+            // Construct the story
+            const story = `
+                <p>${before}</p>
+                <p>${transitionToDecision} ${decision}</p>
+                <p>${transitionToAfter.toLowerCase()} ${after}</p>
+            `;
+            
+            // Display the story
+            document.getElementById('storyText').innerHTML = story;
+            document.getElementById('storyOutput').style.display = 'block';
+            
+            // Smooth scroll to the story
+            document.getElementById('storyOutput').scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+        
+        function copyStory() {
+            const storyText = document.getElementById('storyText').innerText;
+            
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(storyText).then(() => {
+                    const btn = document.querySelector('.copy-btn');
+                    const originalText = btn.textContent;
+                    btn.textContent = 'Copied! ✓';
+                    btn.style.background = '#28a745';
+                    
+                    setTimeout(() => {
+                        btn.textContent = originalText;
+                        btn.style.background = '#6c757d';
+                    }, 2000);
+                });
+            } else {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = storyText;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                
+                alert('Story copied to clipboard!');
+            }
+        }
+        
+        // Add some interactive feedback for textareas
+        document.querySelectorAll('textarea').forEach(textarea => {
+            textarea.addEventListener('input', function() {
+                if (this.value.length > 0) {
+                    this.style.borderColor = '#4CAF50';
+                } else {
+                    this.style.borderColor = '#e0e0e0';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
